@@ -9,8 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ToDo">
-        <activity android:name=".SplashScreenActivity"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar">
+        <activity android:name=".home.HomeActivity">
+
+        </activity>
+        <activity
+            android:name=".splash.SplashScreenActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
