@@ -13,8 +13,7 @@
 
         </activity>
         <activity
-            android:name=".splash.SplashScreenActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:name=".splash.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
