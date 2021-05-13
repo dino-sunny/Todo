@@ -17,11 +17,7 @@ class HomeViewModel (
     private val _eventAddTodo = MutableLiveData<Boolean>()
     val eventTodo: LiveData<Boolean> get() = _eventAddTodo
 
-    private val todo = database.getAllTodo()
-
-    val todos = Transformations.map(todo){todos->
-        formatNights(todos)
-    }
+    val todo = database.getAllTodo()
 
     fun addTodo(){
         viewModelScope.launch {

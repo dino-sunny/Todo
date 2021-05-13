@@ -34,9 +34,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setObservers(){
-        homeViewModel.todos.observe(this,{
+        homeViewModel.todo.observe(this,{
             it.let {
-                Toast.makeText(this,""+it,Toast.LENGTH_SHORT).show()
+                todoAdapter.submitList(it)
             }
         })
 

@@ -49,8 +49,8 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+                app:layout_constraintStart_toStartOf="@+id/description_edit_text"
+                app:layout_constraintTop_toBottomOf="@+id/description_edit_text" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -66,7 +66,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/title_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="12dp"
@@ -85,7 +85,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName2"
+                android:id="@+id/description_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="12dp"
@@ -116,8 +116,8 @@
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+                app:layout_constraintStart_toStartOf="@+id/title_edit_text"
+                app:layout_constraintTop_toBottomOf="@+id/title_edit_text" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -212,6 +212,7 @@
                 android:background="@drawable/edit_text_border"
                 android:backgroundTint="@color/blue_700"
                 android:text="Add"
+                android:onClick="@{() -> addTodoViewModel.onSubmitClick()}"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="18sp"
