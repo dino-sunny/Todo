@@ -1,5 +1,6 @@
 package com.dino.todo.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
@@ -14,5 +15,5 @@ interface TodoDatabaseDao {
     fun delete(todo: Todo)
 
     @Query("SELECT * FROM todo_table")
-    fun getAllTodo(): Todo?
+    fun getAllTodo(): LiveData<List<Todo>>
 }
