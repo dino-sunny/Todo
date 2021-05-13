@@ -17,7 +17,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="@{homeViewModel.todos.toString()}"
+            android:text="TO DO LIST"
+            android:paddingBottom="21dp"
             android:fontFamily="@font/ubuntu_bold"
             android:textColor="@color/blue_700"
             app:layout_constraintEnd_toEndOf="parent"
@@ -30,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
+            android:onClick="@{() -> homeViewModel.onAddTodoClick()}"
             app:backgroundTint="@color/blue_700"
             app:tint="@color/white"
             app:srcCompat="@drawable/ic_plus"
@@ -40,5 +42,15 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.943"
             android:contentDescription="TODO" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/todo"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/todo_heading" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

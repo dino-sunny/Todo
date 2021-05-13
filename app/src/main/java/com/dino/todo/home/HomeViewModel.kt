@@ -1,9 +1,7 @@
 package com.dino.todo.home
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.dino.todo.database.Todo
 import com.dino.todo.database.TodoDatabaseDao
 import com.dino.todo.utility.formatNights
@@ -16,7 +14,11 @@ class HomeViewModel (
     application: Application
 ) : AndroidViewModel(application) {
 
+    private val _eventAddTodo = MutableLiveData<Boolean>()
+    val eventTodo: LiveData<Boolean> get() = _eventAddTodo
+
     private val todo = database.getAllTodo()
+
     val todos = Transformations.map(todo){todos->
         formatNights(todos)
     }
@@ -32,4 +34,12 @@ class HomeViewModel (
             database.insert(night)
         }
     }
+
+    fun onAddTodoClick(){
+        _eventAddTodo.value = true
+    }
+    fun onAddTodoClickComplete(){
+        _eventAddTodo.value = false
+    }
+
 }
