@@ -1,6 +1,12 @@
 package com.dino.todo.home
 
+import android.annotation.SuppressLint
+import android.app.Dialog
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.Window
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -9,6 +15,7 @@ import com.dino.todo.R
 import com.dino.todo.database.Todo
 import com.dino.todo.database.TodoDatabase
 import com.dino.todo.databinding.ActivityHomeBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 
 class HomeActivity : AppCompatActivity(),OnTodoClickListener {
@@ -61,7 +68,7 @@ class HomeActivity : AppCompatActivity(),OnTodoClickListener {
     }
 
     override fun onDeleteClicked(todo: Todo) {
-        homeViewModel.deleteTodo(todo)
+        showDialog(todo)
     }
 
     override fun onEditClicked(todo: Todo) {
@@ -78,5 +85,21 @@ class HomeActivity : AppCompatActivity(),OnTodoClickListener {
         todo.completed = true
         homeViewModel.updateTodo(todo)
         todoAdapter.notifyDataSetChanged()
+    }
+
+    private fun showDialog(todo: Todo) {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.delete_confirmation)
+        val yesBtn = dialog.findViewById(R.id.confirm_button) as Button
+        val noBtn = dialog.findViewById(R.id.cancel_button) as Button
+        yesBtn.setOnClickListener {
+            homeViewModel.deleteTodo(todo)
+            dialog.dismiss()
+        }
+        noBtn.setOnClickListener { dialog.dismiss() }
+        dialog.show()
+
     }
 }
