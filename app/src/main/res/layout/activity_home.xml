@@ -136,13 +136,24 @@
             android:layout_margin="21dp"
             android:focusable="true" />
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:lottie_rawRes="@raw/empty_state"
+            app:lottie_autoPlay="true"
+            android:layout_gravity="center|center_horizontal"
+            app:lottie_loop="true"
+            android:visibility="@{(homeViewModel.completedTodo.size()>0 || homeViewModel.todo.size()>0)?View.GONE:View.VISIBLE}"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="@font/ubuntu_bold"
-            android:textSize="18sp"
-            android:visibility="@{(homeViewModel.completedTodo.size()>0 || homeViewModel.todo.size()>0)?View.INVISIBLE:View.VISIBLE}"
-            android:gravity="center|center_horizontal"
+            android:fontFamily="@font/ubuntu"
+            android:textSize="16sp"
+            android:visibility="@{(homeViewModel.completedTodo.size()>0 || homeViewModel.todo.size()>0)?View.GONE:View.VISIBLE}"
+            android:gravity="center_horizontal|bottom"
+            android:layout_marginBottom="120dp"
             android:text="@string/don_t_be_lazy_add_some_todos"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
