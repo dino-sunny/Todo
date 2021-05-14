@@ -16,7 +16,9 @@
 
         </receiver>
 
-        <activity android:name=".home.HomeActivity"></activity>
+        <activity android:name=".home.HomeActivity">
+
+        </activity>
         <activity android:name=".splash.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
