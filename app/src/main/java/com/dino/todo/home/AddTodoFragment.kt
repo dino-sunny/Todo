@@ -20,6 +20,7 @@ import com.dino.todo.R
 import com.dino.todo.database.Todo
 import com.dino.todo.database.TodoDatabase
 import com.dino.todo.databinding.AddTodoFragmentBinding
+import com.google.gson.Gson
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,6 +32,8 @@ class AddTodoFragment : DialogFragment() {
     private lateinit var alarmManager: AlarmManager
     private lateinit var notifyPendingIntent: PendingIntent
     private lateinit var mNotificationManager: NotificationManager
+
+    private lateinit var todo: Todo
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +47,12 @@ class AddTodoFragment : DialogFragment() {
         addTodoViewModel = ViewModelProvider(this, viewModelFactory).get(AddTodoViewModel::class.java)
         binding.addTodoViewModel = addTodoViewModel
 
+        if (arguments!=null) {
+            val todoUpdate = arguments?.get("TODO_UPDATE") as String
+            todo = Gson().fromJson(todoUpdate, Todo::class.java)
+            binding.todo = todo
+            addTodoViewModel.isUpdate = true
+        }
         setUp()
         createNotificationChannel();
 
@@ -110,8 +119,12 @@ class AddTodoFragment : DialogFragment() {
                         newTodo.isNotification = true
                         setNotification(newTodo)
                     }
-
-                    addTodoViewModel.addTodo(newTodo)
+                    if (addTodoViewModel.isUpdate){
+                        newTodo.todoId = todo.todoId
+                        addTodoViewModel.updateTodo(newTodo)
+                    }else {
+                        addTodoViewModel.addTodo(newTodo)
+                    }
                     addTodoViewModel.onSubmitComplete()
                     dismiss()
                 } else {

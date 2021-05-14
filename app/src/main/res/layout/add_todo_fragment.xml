@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
+            name="todo"
+            type="com.dino.todo.database.Todo" />
+        <variable
             name="addTodoViewModel"
             type="com.dino.todo.home.AddTodoViewModel" />
     </data>
@@ -75,6 +78,7 @@
                 android:ems="10"
                 android:fontFamily="@font/ubuntu"
                 android:hint="@string/type_task"
+                android:text="@{todo.title}"
                 android:inputType="textPersonName"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
@@ -96,6 +100,7 @@
                 android:fontFamily="@font/ubuntu"
                 android:gravity="top"
                 android:maxLines="4"
+                android:text="@{todo.description}"
                 android:hint="@string/type_description"
                 android:inputType="textMultiLine"
                 android:paddingStart="10dp"
@@ -221,7 +226,7 @@
                 android:layout_marginEnd="21dp"
                 android:background="@drawable/edit_text_border"
                 android:backgroundTint="@color/blue_700"
-                android:text="@string/add"
+                android:text="@{addTodoViewModel.isUpdate?@string/update:@string/add}"
                 android:onClick="@{() -> addTodoViewModel.onSubmitClick()}"
                 android:textAllCaps="false"
                 android:textColor="@color/white"

@@ -14,6 +14,8 @@ class AddTodoViewModel (
     application: Application
 ) : AndroidViewModel(application) {
 
+    var isUpdate = false
+
     private val _eventSubmitTodo = MutableLiveData<Boolean>()
     val eventSubmit: LiveData<Boolean> get() = _eventSubmitTodo
 
@@ -31,9 +33,20 @@ class AddTodoViewModel (
             insert(todo)
         }
     }
-    private suspend fun insert(night: Todo) {
+    private suspend fun insert(todo: Todo) {
         withContext(Dispatchers.IO) {
-            database.insert(night)
+            database.insert(todo)
+        }
+    }
+
+    fun updateTodo(todo: Todo){
+        viewModelScope.launch {
+            update(todo)
+        }
+    }
+    private suspend fun update(todo: Todo) {
+        withContext(Dispatchers.IO) {
+            database.update(todo)
         }
     }
 

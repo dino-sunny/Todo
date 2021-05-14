@@ -68,7 +68,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/ubuntu_bold"
                 android:paddingBottom="21dp"
-                android:text="COMPLETED"
+                android:text="COMPELETED"
                 android:textColor="@color/blue_700"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
