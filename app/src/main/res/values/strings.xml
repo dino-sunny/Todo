@@ -22,4 +22,5 @@
     <string name="delete_task">DELETE TASK!</string>
     <string name="delete">Delete</string>
     <string name="are_you_sure_you_want_to_delete_the_task">Are you sure you want to delete the task?</string>
+    <string name="error_message">Add a title to add a todo</string>
 </resources>

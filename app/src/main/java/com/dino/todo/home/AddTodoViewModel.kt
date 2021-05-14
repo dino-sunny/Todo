@@ -27,6 +27,7 @@ class AddTodoViewModel (
     private val _eventTime = MutableLiveData<Boolean>()
     val eventTime: LiveData<Boolean> get() = _eventTime
 
+    //Function to add a task
     fun addTodo(todo: Todo){
         viewModelScope.launch {
             insert(todo)

@@ -7,7 +7,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,11 +19,11 @@ import com.dino.todo.R
 import com.dino.todo.database.Todo
 import com.dino.todo.database.TodoDatabase
 import com.dino.todo.databinding.AddTodoFragmentBinding
+import com.dino.todo.utility.Constants.ConstantVariables.TODO_UPDATE
 import com.google.gson.Gson
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 class AddTodoFragment : DialogFragment() {
     private lateinit var addTodoViewModel: AddTodoViewModel
@@ -48,13 +47,13 @@ class AddTodoFragment : DialogFragment() {
         binding.addTodoViewModel = addTodoViewModel
 
         if (arguments!=null) {
-            val todoUpdate = arguments?.get("TODO_UPDATE") as String
+            val todoUpdate = arguments?.get(TODO_UPDATE) as String
             todo = Gson().fromJson(todoUpdate, Todo::class.java)
             binding.todo = todo
             addTodoViewModel.isUpdate = true
         }
-        setUp()
-        createNotificationChannel();
+        setUpAlarmManager()
+        createNotificationChannel()
 
         return binding.root
     }
@@ -85,7 +84,7 @@ class AddTodoFragment : DialogFragment() {
         }
     }
 
-    private fun setUp() {
+    private fun setUpAlarmManager() {
         alarmManager = activity!!.getSystemService(ALARM_SERVICE) as AlarmManager
         val notifyIntent = Intent(context, AlarmReceiver::class.java)
         notifyPendingIntent = PendingIntent.getBroadcast(
@@ -101,7 +100,7 @@ class AddTodoFragment : DialogFragment() {
         dialog?.window?.setLayout(
                 ConstraintLayout.LayoutParams.MATCH_PARENT,
                 ConstraintLayout.LayoutParams.WRAP_CONTENT
-        );
+        )
         setObservers()
     }
 
@@ -128,7 +127,7 @@ class AddTodoFragment : DialogFragment() {
                     addTodoViewModel.onSubmitComplete()
                     dismiss()
                 } else {
-                    Toast.makeText(context, "Add a title to add a todo", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, getString(R.string.error_message), Toast.LENGTH_SHORT).show()
                 }
             }
         })
@@ -153,6 +152,7 @@ class AddTodoFragment : DialogFragment() {
                                 binding.editTextDate.setText(dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
                             }, mYear, mMonth, mDay)
                 }?.show()
+                addTodoViewModel.onDateClickComplete()
             }
         })
 
@@ -165,6 +165,7 @@ class AddTodoFragment : DialogFragment() {
                 val timePickerDialog = TimePickerDialog(context,
                         { view, hourOfDay, minute -> binding.editTextTime.setText("$hourOfDay:$minute") }, mHour, mMinute, true)
                 timePickerDialog.show()
+                addTodoViewModel.onTimeClickComplete()
             }
         })
     }

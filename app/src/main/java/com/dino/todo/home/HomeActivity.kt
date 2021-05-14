@@ -11,6 +11,7 @@ import com.dino.todo.R
 import com.dino.todo.database.Todo
 import com.dino.todo.database.TodoDatabase
 import com.dino.todo.databinding.ActivityHomeBinding
+import com.dino.todo.utility.Constants.ConstantVariables.TODO_UPDATE
 import com.google.gson.Gson
 
 class HomeActivity : AppCompatActivity(),OnTodoClickListener {
@@ -76,7 +77,7 @@ class HomeActivity : AppCompatActivity(),OnTodoClickListener {
     private fun showEditTodo(todo: Todo) {
         val bundle = Bundle()
         val mData = Gson().toJson(todo)
-        bundle.putString("TODO_UPDATE",mData.toString())
+        bundle.putString(TODO_UPDATE,mData.toString())
         val fragment = AddTodoFragment()
         fragment.arguments = bundle
         fragment.show(supportFragmentManager, getString(R.string.tag))
