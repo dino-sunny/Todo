@@ -73,13 +73,12 @@ class AddTodoFragment : DialogFragment() {
 
             // Create the NotificationChannel with all the parameters.
             val notificationChannel = NotificationChannel("primary_notification_channel",
-                    "Stand up notification",
+                    "TODO",
                     NotificationManager.IMPORTANCE_HIGH)
             notificationChannel.enableLights(true)
             notificationChannel.lightColor = Color.RED
             notificationChannel.enableVibration(true)
-            notificationChannel.description = "Notifies every 15 minutes to " +
-                    "stand up and walk"
+            notificationChannel.description = "You have a task to complete. Open TODO!"
             mNotificationManager.createNotificationChannel(notificationChannel)
         }
     }
@@ -120,6 +119,7 @@ class AddTodoFragment : DialogFragment() {
                     }
                     if (addTodoViewModel.isUpdate){
                         newTodo.todoId = todo.todoId
+                        newTodo.date = date
                         addTodoViewModel.updateTodo(newTodo)
                     }else {
                         addTodoViewModel.addTodo(newTodo)
