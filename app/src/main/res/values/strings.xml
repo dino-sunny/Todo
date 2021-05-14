@@ -13,4 +13,7 @@
     <string name="add">Add</string>
     <string name="update">Update</string>
     <string name="delete_button">delete_button</string>
+    <string name="to_do_list">TO DO LIST</string>
+    <string name="completed">COMPLETED</string>
+    <string name="don_t_be_lazy_add_some_todos">Don\'t be lazy add some todos</string>
 </resources>
