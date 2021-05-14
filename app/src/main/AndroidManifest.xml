@@ -9,11 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ToDo">
-        <activity android:name=".home.HomeActivity">
+        <receiver
+            android:name=".home.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false">
 
-        </activity>
-        <activity
-            android:name=".splash.SplashScreenActivity">
+        </receiver>
+
+        <activity android:name=".home.HomeActivity"></activity>
+        <activity android:name=".splash.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
