@@ -150,7 +150,7 @@ class AddTodoFragment : DialogFragment() {
                 val mMinute = c[Calendar.MINUTE]
                 // Launch Time Picker Dialog
                 val timePickerDialog = TimePickerDialog(context,
-                        { view, hourOfDay, minute -> binding.editTextTime.setText("$hourOfDay:$minute") }, mHour, mMinute, false)
+                        { view, hourOfDay, minute -> binding.editTextTime.setText("$hourOfDay:$minute") }, mHour, mMinute, true)
                 timePickerDialog.show()
             }
         })
@@ -159,14 +159,13 @@ class AddTodoFragment : DialogFragment() {
     private fun formatedDate(): Long {
         if (binding.editTextDate.text.toString().isNotEmpty()) {
             val str_date = binding.editTextDate.text.toString() + " " + binding.editTextTime.text.toString()
-            val formatter: DateFormat = SimpleDateFormat("dd-MM-yyyy hh:mm", Locale.ENGLISH)
+            val formatter: DateFormat = SimpleDateFormat("dd-MM-yyyy hh:mm",Locale.getDefault())
             val date = formatter.parse(str_date) as Date
             return date.time
         }else return 0
     }
 
     private fun setNotification(todo: Todo) {
-        alarmManager.set(AlarmManager.RTC_WAKEUP,
-                todo.date, notifyPendingIntent)
+        alarmManager.set(AlarmManager.RTC_WAKEUP, todo.date, notifyPendingIntent)
     }
 }
