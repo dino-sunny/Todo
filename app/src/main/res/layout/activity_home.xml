@@ -25,9 +25,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
-                app:title="@string/app_name"
-                app:titleTextColor="@color/white"
-                app:popupTheme="@style/Widget.AppCompat.ActionBar" />
+                app:popupTheme="@style/Widget.AppCompat.ActionBar">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_todo"
+                    android:contentDescription="@string/app_name"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:fontFamily="@font/ubuntu"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"/>
+            </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -46,22 +60,24 @@
                     android:id="@+id/todo_heading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="20dp"
                     android:fontFamily="@font/ubuntu_bold"
                     android:paddingBottom="10dp"
                     android:text="@string/to_do_list"
-                    android:visibility="@{homeViewModel.todo.size()>0?View.VISIBLE:View.GONE}"
                     android:textColor="@color/blue_700"
                     android:textSize="16sp"
+                    android:layout_marginStart="16dp"
+                    android:visibility="@{homeViewModel.todo.size()>0?View.VISIBLE:View.GONE}"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.035"
-                    app:layout_constraintStart_toStartOf="@+id/todo"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/todo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/todo_heading"
                     tools:layout_editor_absoluteX="-16dp"
@@ -73,6 +89,7 @@
                     android:id="@+id/todos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +105,7 @@
                     android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="11dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/ubuntu_bold"
                     android:paddingBottom="10dp"
@@ -119,13 +136,24 @@
             android:layout_margin="21dp"
             android:focusable="true" />
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:lottie_rawRes="@raw/empty_state"
+            app:lottie_autoPlay="true"
+            android:layout_gravity="center|center_horizontal"
+            app:lottie_loop="true"
+            android:visibility="@{(homeViewModel.completedTodo.size()>0 || homeViewModel.todo.size()>0)?View.GONE:View.VISIBLE}"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="@font/ubuntu_bold"
-            android:textSize="18sp"
-            android:visibility="@{(homeViewModel.completedTodo.size()>0 || homeViewModel.todo.size()>0)?View.INVISIBLE:View.VISIBLE}"
-            android:gravity="center|center_horizontal"
+            android:fontFamily="@font/ubuntu"
+            android:textSize="16sp"
+            android:visibility="@{(homeViewModel.completedTodo.size()>0 || homeViewModel.todo.size()>0)?View.GONE:View.VISIBLE}"
+            android:gravity="center_horizontal|bottom"
+            android:layout_marginBottom="120dp"
             android:text="@string/don_t_be_lazy_add_some_todos"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

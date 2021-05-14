@@ -19,10 +19,10 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="6dp"
             app:cardCornerRadius="6dp"
             app:cardBackgroundColor="@{todo.completed?@color/todo_background:@color/white}"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -85,8 +85,8 @@
 
                 <ImageView
                     android:id="@+id/delete_button"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_marginEnd="12dp"
                     android:contentDescription="@string/delete_button"
                     android:onClick="@{() -> clickListener.onDeleteClicked(todo)}"
@@ -98,9 +98,9 @@
 
                 <ImageView
                     android:id="@+id/edit_button"
-                    android:layout_width="15dp"
+                    android:layout_width="18dp"
                     android:contentDescription="@string/edit_button"
-                    android:layout_height="15dp"
+                    android:layout_height="18dp"
                     android:layout_marginEnd="10dp"
                     android:onClick="@{() -> clickListener.onEditClicked(todo)}"
                     app:layout_constraintBottom_toBottomOf="@+id/delete_button"
@@ -112,8 +112,8 @@
 
                 <ImageView
                     android:id="@+id/bell_button"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_marginEnd="10dp"
                     android:contentDescription="@string/bell_button"
                     android:visibility="@{todo.date>0?View.VISIBLE:View.INVISIBLE}"
