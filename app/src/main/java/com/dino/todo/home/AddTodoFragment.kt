@@ -1,9 +1,6 @@
 package com.dino.todo.home
 
-import android.app.AlarmManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context.ALARM_SERVICE
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
@@ -14,8 +11,8 @@ import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
@@ -23,6 +20,9 @@ import com.dino.todo.R
 import com.dino.todo.database.Todo
 import com.dino.todo.database.TodoDatabase
 import com.dino.todo.databinding.AddTodoFragmentBinding
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class AddTodoFragment : DialogFragment() {
@@ -99,21 +99,74 @@ class AddTodoFragment : DialogFragment() {
     private fun setObservers() {
         addTodoViewModel.eventSubmit.observe(viewLifecycleOwner, { clicked ->
             if (clicked) {
-                val newTodo = Todo()
-                newTodo.title = binding.titleEditText.text.toString()
-                newTodo.description = binding.descriptionEditText.text.toString()
-                setNotification(newTodo)
-                addTodoViewModel.addTodo(newTodo)
-                addTodoViewModel.onSubmitComplete()
+                if (binding.titleEditText.text.isNotEmpty()) {
+                    val newTodo = Todo()
+                    newTodo.title = binding.titleEditText.text.toString()
+                    newTodo.description = binding.descriptionEditText.text.toString()
+
+                    val date = formatedDate()
+                    if (date>0) {
+                        newTodo.date = date
+                        newTodo.isNotification = true
+                        setNotification(newTodo)
+                    }
+
+                    addTodoViewModel.addTodo(newTodo)
+                    addTodoViewModel.onSubmitComplete()
+                    dismiss()
+                } else {
+                    Toast.makeText(context, "Add a title to add a todo", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+
+        addTodoViewModel.eventCancel.observe(viewLifecycleOwner, { clicked ->
+            if (clicked) {
                 dismiss()
+                addTodoViewModel.onCancelComplete()
+            }
+        })
+
+        addTodoViewModel.eventDate.observe(viewLifecycleOwner, { clicked ->
+            if (clicked) {
+                // Get Current Date
+                val c: Calendar = Calendar.getInstance()
+                val mYear = c.get(Calendar.YEAR)
+                val mMonth = c.get(Calendar.MONTH)
+                val mDay = c.get(Calendar.DAY_OF_MONTH)
+                context?.let {
+                    DatePickerDialog(it,
+                            { view, year, monthOfYear, dayOfMonth ->
+                                binding.editTextDate.setText(dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
+                            }, mYear, mMonth, mDay)
+                }?.show()
+            }
+        })
+
+        addTodoViewModel.eventTime.observe(viewLifecycleOwner, { clicked ->
+            if (clicked) {
+                val c = Calendar.getInstance()
+                val mHour = c[Calendar.HOUR_OF_DAY]
+                val mMinute = c[Calendar.MINUTE]
+                // Launch Time Picker Dialog
+                val timePickerDialog = TimePickerDialog(context,
+                        { view, hourOfDay, minute -> binding.editTextTime.setText("$hourOfDay:$minute") }, mHour, mMinute, false)
+                timePickerDialog.show()
             }
         })
     }
 
-    private fun setNotification(todo: Todo) {
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                todo.date, notifyPendingIntent)
+    private fun formatedDate(): Long {
+        if (binding.editTextDate.text.toString().isNotEmpty()) {
+            val str_date = binding.editTextDate.text.toString() + " " + binding.editTextTime.text.toString()
+            val formatter: DateFormat = SimpleDateFormat("dd-MM-yyyy hh:mm", Locale.ENGLISH)
+            val date = formatter.parse(str_date) as Date
+            return date.time
+        }else return 0
     }
 
-
+    private fun setNotification(todo: Todo) {
+        alarmManager.set(AlarmManager.RTC_WAKEUP,
+                todo.date, notifyPendingIntent)
+    }
 }

@@ -17,6 +17,15 @@ class AddTodoViewModel (
     private val _eventSubmitTodo = MutableLiveData<Boolean>()
     val eventSubmit: LiveData<Boolean> get() = _eventSubmitTodo
 
+    private val _eventCancel = MutableLiveData<Boolean>()
+    val eventCancel: LiveData<Boolean> get() = _eventCancel
+
+    private val _eventDate = MutableLiveData<Boolean>()
+    val eventDate: LiveData<Boolean> get() = _eventDate
+
+    private val _eventTime = MutableLiveData<Boolean>()
+    val eventTime: LiveData<Boolean> get() = _eventTime
+
     fun addTodo(todo: Todo){
         viewModelScope.launch {
             insert(todo)
@@ -33,6 +42,27 @@ class AddTodoViewModel (
     }
     fun onSubmitComplete(){
         _eventSubmitTodo.value = false
+    }
+
+    fun onCancelClick(){
+        _eventCancel.value = true
+    }
+    fun onCancelComplete(){
+        _eventCancel.value = false
+    }
+
+    fun onDateClick(){
+        _eventDate.value = true
+    }
+    fun onDateClickComplete(){
+        _eventDate.value = false
+    }
+
+    fun onTimeClick(){
+        _eventTime.value = true
+    }
+    fun onTimeClickComplete(){
+        _eventTime.value = false
     }
 
 }

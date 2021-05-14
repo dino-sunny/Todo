@@ -12,6 +12,7 @@ data class Todo(
         var title: String = "",
         @ColumnInfo(name = "description")
         var description: String = "",
-        var date: Long = System.currentTimeMillis(),
+        var date: Long = 0L,
+        var isNotification: Boolean = false,
         var completed: Boolean = false
 )
