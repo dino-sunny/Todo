@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.dino.todo.database.Todo
 import com.dino.todo.database.TodoDatabaseDao
-import com.dino.todo.utility.formatNights
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

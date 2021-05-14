@@ -24,6 +24,7 @@ class SplashScreenActivity : AppCompatActivity() {
         mDelayHandler.postDelayed(mRunnable, SPLASH_TIME_OUT)
     }
 
+    //Open home screen after 1second
     private val mRunnable: Runnable = Runnable {
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)

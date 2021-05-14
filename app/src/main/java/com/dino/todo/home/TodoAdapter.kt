@@ -33,6 +33,7 @@ class ViewHolder(val binding: TodoItemBinding): RecyclerView.ViewHolder(binding.
     }
 }
 
+//Listeners for button clicks
 interface OnTodoClickListener{
     fun onDeleteClicked(todo: Todo)
     fun onEditClicked(todo: Todo)

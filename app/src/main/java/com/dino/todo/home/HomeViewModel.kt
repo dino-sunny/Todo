@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.dino.todo.database.Todo
 import com.dino.todo.database.TodoDatabaseDao
-import com.dino.todo.utility.formatNights
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -20,22 +19,26 @@ class HomeViewModel (
     val todo = database.getAllTodo()
     val completedTodo = database.getCompletedTodo()
 
+    //Function to delete a task
     fun deleteTodo(todo: Todo){
         viewModelScope.launch {
-            insert(todo)
+            delete(todo)
         }
     }
-    private suspend fun insert(todo: Todo) {
+    //Deleting in a IO thread
+    private suspend fun delete(todo: Todo) {
         withContext(Dispatchers.IO) {
             database.delete(todo)
         }
     }
 
+    //Function to update a task
     fun updateTodo(todo: Todo){
         viewModelScope.launch {
             update(todo)
         }
     }
+    //Updating DB in IO thread using coroutine
     private suspend fun update(todo: Todo) {
         withContext(Dispatchers.IO) {
             database.update(todo)

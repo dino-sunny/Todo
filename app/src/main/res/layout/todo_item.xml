@@ -42,6 +42,7 @@
                     android:layout_marginTop="10dp"
                     android:scaleX="0.75"
                     android:scaleY="0.75"
+                    android:buttonTint="@color/blue_700"
                     android:checked="@{todo.completed}"
                     android:onClick="@{() -> clickListener.onDoneClicked(todo)}"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -59,7 +60,7 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="@+id/todo_done_button"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                    app:layout_constraintEnd_toStartOf="@+id/bell_button"
                     app:layout_constraintStart_toEndOf="@+id/todo_done_button"
                     app:layout_constraintTop_toTopOf="@+id/todo_done_button"
                     app:layout_constraintVertical_bias="0.23" />
@@ -86,6 +87,7 @@
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_marginEnd="12dp"
+                    android:contentDescription="@string/delete_button"
                     android:onClick="@{() -> clickListener.onDeleteClicked(todo)}"
                     app:layout_constraintBottom_toBottomOf="@+id/title_text"
                     app:layout_constraintEnd_toStartOf="@+id/edit_button"
@@ -96,6 +98,7 @@
                 <ImageView
                     android:id="@+id/edit_button"
                     android:layout_width="15dp"
+                    android:contentDescription="@string/edit_button"
                     android:layout_height="15dp"
                     android:layout_marginEnd="10dp"
                     android:onClick="@{() -> clickListener.onEditClicked(todo)}"
@@ -107,10 +110,11 @@
                     app:srcCompat="@drawable/ic_edit" />
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/bell_button"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_marginEnd="10dp"
+                    android:contentDescription="@string/bell_button"
                     android:visibility="@{todo.date>0?View.VISIBLE:View.INVISIBLE}"
                     app:layout_constraintBottom_toBottomOf="@+id/title_text"
                     app:layout_constraintEnd_toStartOf="@+id/delete_button"

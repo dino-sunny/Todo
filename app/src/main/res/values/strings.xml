@@ -17,4 +17,9 @@
     <string name="completed">COMPLETED</string>
     <string name="don_t_be_lazy_add_some_todos">Don\'t be lazy add some todos</string>
     <string name="tag">addTodo</string>
+    <string name="edit_button">edit button</string>
+    <string name="bell_button">bell button</string>
+    <string name="delete_task">DELETE TASK!</string>
+    <string name="delete">Delete</string>
+    <string name="are_you_sure_you_want_to_delete_the_task">Are you sure you want to delete the task?</string>
 </resources>
