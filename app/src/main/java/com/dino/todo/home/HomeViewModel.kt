@@ -18,16 +18,27 @@ class HomeViewModel (
     val eventTodo: LiveData<Boolean> get() = _eventAddTodo
 
     val todo = database.getAllTodo()
+    val completedTodo = database.getCompletedTodo()
 
-    fun addTodo(){
+    fun deleteTodo(todo: Todo){
         viewModelScope.launch {
-            val todo = Todo()
             insert(todo)
         }
     }
-    private suspend fun insert(night: Todo) {
+    private suspend fun insert(todo: Todo) {
         withContext(Dispatchers.IO) {
-            database.insert(night)
+            database.delete(todo)
+        }
+    }
+
+    fun updateTodo(todo: Todo){
+        viewModelScope.launch {
+            update(todo)
+        }
+    }
+    private suspend fun update(todo: Todo) {
+        withContext(Dispatchers.IO) {
+            database.update(todo)
         }
     }
 

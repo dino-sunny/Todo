@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dino.todo.database.Todo
 import com.dino.todo.databinding.TodoItemBinding
 
-class TodoAdapter() : ListAdapter<Todo, ViewHolder>(
+class TodoAdapter(private val todoClickListener: OnTodoClickListener) : ListAdapter<Todo, ViewHolder>(
     RecentDiffCallback()
 ){
 
@@ -20,16 +20,23 @@ class TodoAdapter() : ListAdapter<Todo, ViewHolder>(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind((item))
+        holder.bind((item),todoClickListener)
     }
 }
 
 class ViewHolder(val binding: TodoItemBinding): RecyclerView.ViewHolder(binding.root){
 
-    fun bind(item: Todo) {
+    fun bind(item: Todo,todoClickListener: OnTodoClickListener) {
         binding.todo = item
+        binding.clickListener = todoClickListener
         binding.executePendingBindings()
     }
+}
+
+interface OnTodoClickListener{
+    fun onDeleteClicked(todo: Todo)
+    fun onEditClicked(todo: Todo)
+    fun onDoneClicked(todo: Todo)
 }
 class RecentDiffCallback : DiffUtil.ItemCallback<Todo>() {
     override fun areItemsTheSame(oldItem: Todo, newItem: Todo): Boolean {

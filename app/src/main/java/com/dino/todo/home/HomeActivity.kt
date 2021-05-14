@@ -6,12 +6,14 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.dino.todo.R
+import com.dino.todo.database.Todo
 import com.dino.todo.database.TodoDatabase
 import com.dino.todo.databinding.ActivityHomeBinding
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(),OnTodoClickListener {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var todoAdapter: TodoAdapter
+    private lateinit var completedTodoAdapter: TodoAdapter
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,14 +31,22 @@ class HomeActivity : AppCompatActivity() {
         setObservers()
     }
     private fun setAdapter() {
-        todoAdapter = TodoAdapter()
+        todoAdapter = TodoAdapter(this)
+        completedTodoAdapter = TodoAdapter(this)
         binding.todo.adapter = todoAdapter
+        binding.todos.adapter = completedTodoAdapter
     }
 
     private fun setObservers(){
         homeViewModel.todo.observe(this,{
             it.let {
                 todoAdapter.submitList(it)
+            }
+        })
+
+        homeViewModel.completedTodo.observe(this,{
+            it.let {
+                completedTodoAdapter.submitList(it)
             }
         })
 
@@ -47,5 +57,19 @@ class HomeActivity : AppCompatActivity() {
                 homeViewModel.onAddTodoClickComplete()
             }
         })
+    }
+
+    override fun onDeleteClicked(todo: Todo) {
+        homeViewModel.deleteTodo(todo)
+    }
+
+    override fun onEditClicked(todo: Todo) {
+        Toast.makeText(this,"",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDoneClicked(todo: Todo) {
+        todo.completed = true
+        homeViewModel.updateTodo(todo)
+        todoAdapter.notifyDataSetChanged()
     }
 }
