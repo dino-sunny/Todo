@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <import type="androidx.core.content.ContextCompat"/>
+        <variable
+            name="todo"
+            type="com.dino.todo.database.Todo" />
+        <variable
+            name="clickListener"
+            type="com.dino.todo.home.OnTodoClickListener" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="6dp"
+            app:cardBackgroundColor="@{todo.completed?@color/todo_background:@color/white}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RadioButton
+                    android:id="@+id/todo_done_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:scaleX="0.75"
+                    android:scaleY="0.75"
+                    android:buttonTint="@color/blue_700"
+                    android:checked="@{todo.completed}"
+                    android:onClick="@{() -> clickListener.onDoneClicked(todo)}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/title_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:text="@{todo.title}"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/todo_done_button"
+                    app:layout_constraintEnd_toStartOf="@+id/bell_button"
+                    app:layout_constraintStart_toEndOf="@+id/todo_done_button"
+                    app:layout_constraintTop_toTopOf="@+id/todo_done_button"
+                    app:layout_constraintVertical_bias="0.23" />
+
+                <TextView
+                    android:id="@+id/description_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="21dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/ubuntu"
+                    android:text="@{todo.description}"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/title_text"
+                    app:layout_constraintTop_toBottomOf="@+id/title_text"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <ImageView
+                    android:id="@+id/delete_button"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginEnd="12dp"
+                    android:contentDescription="@string/delete_button"
+                    android:onClick="@{() -> clickListener.onDeleteClicked(todo)}"
+                    app:layout_constraintBottom_toBottomOf="@+id/title_text"
+                    app:layout_constraintEnd_toStartOf="@+id/edit_button"
+                    app:layout_constraintTop_toTopOf="@+id/title_text"
+                    app:layout_constraintVertical_bias="0.571"
+                    app:srcCompat="@drawable/ic_delete" />
+
+                <ImageView
+                    android:id="@+id/edit_button"
+                    android:layout_width="15dp"
+                    android:contentDescription="@string/edit_button"
+                    android:layout_height="15dp"
+                    android:layout_marginEnd="10dp"
+                    android:onClick="@{() -> clickListener.onEditClicked(todo)}"
+                    app:layout_constraintBottom_toBottomOf="@+id/delete_button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/delete_button"
+                    app:layout_constraintVertical_bias="0.0"
+                    android:visibility="@{todo.completed?View.GONE:View.VISIBLE}"
+                    app:srcCompat="@drawable/ic_edit" />
+
+                <ImageView
+                    android:id="@+id/bell_button"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginEnd="10dp"
+                    android:contentDescription="@string/bell_button"
+                    android:visibility="@{todo.date>0?View.VISIBLE:View.INVISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="@+id/title_text"
+                    app:layout_constraintEnd_toStartOf="@+id/delete_button"
+                    app:layout_constraintTop_toTopOf="@+id/title_text"
+                    app:srcCompat="@drawable/ic_notification" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
