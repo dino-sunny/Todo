@@ -16,4 +16,5 @@
     <string name="to_do_list">TO DO LIST</string>
     <string name="completed">COMPLETED</string>
     <string name="don_t_be_lazy_add_some_todos">Don\'t be lazy add some todos</string>
+    <string name="tag">addTodo</string>
 </resources>
