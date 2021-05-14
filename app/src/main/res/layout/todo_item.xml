@@ -103,6 +103,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/delete_button"
                     app:layout_constraintVertical_bias="0.0"
+                    android:visibility="@{todo.completed?View.GONE:View.VISIBLE}"
                     app:srcCompat="@drawable/ic_edit" />
 
                 <ImageView
