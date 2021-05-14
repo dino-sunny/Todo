@@ -30,7 +30,7 @@
                 android:layout_marginStart="21dp"
                 android:layout_marginTop="21dp"
                 android:fontFamily="@font/ubuntu_bold"
-                android:text="Add Task"
+                android:text="@string/add_task"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="21dp"
                 android:fontFamily="@font/ubuntu_bold"
-                android:text="Set Reminder"
+                android:text="@string/set_reminder"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/ubuntu"
-                android:text="Task"
+                android:text="@string/task"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -74,15 +74,17 @@
                 android:background="@drawable/edit_text_border"
                 android:ems="10"
                 android:fontFamily="@font/ubuntu"
-                android:hint="Type task"
+                android:hint="@string/type_task"
                 android:inputType="textPersonName"
                 android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:textColor="@color/black"
                 android:textColorHint="@android:color/darker_gray"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView3"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                android:importantForAutofill="no" />
 
             <EditText
                 android:id="@+id/description_edit_text"
@@ -91,11 +93,11 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="21dp"
                 android:background="@drawable/edit_text_border"
-                android:ems="10"
                 android:fontFamily="@font/ubuntu"
                 android:gravity="top"
-                android:hint="Type description"
-                android:inputType="textPersonName"
+                android:maxLines="4"
+                android:hint="@string/type_description"
+                android:inputType="textMultiLine"
                 android:paddingStart="10dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="10dp"
@@ -104,7 +106,8 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView4"
-                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                android:importantForAutofill="no" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -112,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/ubuntu"
-                android:text="Description"
+                android:text="@string/description"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -125,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="21dp"
                 android:fontFamily="@font/ubuntu"
-                android:text="Date"
+                android:text="@string/date"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -137,7 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ubuntu"
-                android:text="Time"
+                android:text="@string/time"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@+id/textView6"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -154,7 +157,7 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/edit_text_border"
                 android:ems="10"
-                android:hint="Choose date"
+                android:hint="@string/choose_date"
                 android:focusable="false"
                 android:onClick="@{() -> addTodoViewModel.onDateClick()}"
                 android:inputType="date"
@@ -164,7 +167,8 @@
                 app:layout_constraintEnd_toStartOf="@+id/editTextTime"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+                app:layout_constraintTop_toBottomOf="@+id/textView6"
+                android:importantForAutofill="no" />
 
             <EditText
                 android:id="@+id/editTextTime"
@@ -174,7 +178,7 @@
                 android:layout_marginEnd="21dp"
                 android:background="@drawable/edit_text_border"
                 android:ems="10"
-                android:hint="Choose Time"
+                android:hint="@string/choose_time"
                 android:focusable="false"
                 android:onClick="@{() -> addTodoViewModel.onTimeClick()}"
                 android:inputType="time"
@@ -185,7 +189,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/editTextDate"
-                app:layout_constraintTop_toTopOf="@+id/editTextDate" />
+                app:layout_constraintTop_toTopOf="@+id/editTextDate"
+                android:importantForAutofill="no" />
 
             <Button
                 android:id="@+id/button"
@@ -216,7 +221,7 @@
                 android:layout_marginEnd="21dp"
                 android:background="@drawable/edit_text_border"
                 android:backgroundTint="@color/blue_700"
-                android:text="Add"
+                android:text="@string/add"
                 android:onClick="@{() -> addTodoViewModel.onSubmitClick()}"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
@@ -232,6 +237,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/ic_delete"
+                android:contentDescription="@string/delete_button"
                 android:onClick="@{() -> addTodoViewModel.onCancelClick()}"
                 app:layout_constraintBottom_toBottomOf="@+id/textView2"
                 app:layout_constraintEnd_toEndOf="parent"
