@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/app_name"
-                    android:fontFamily="@font/ubuntu"
+                    android:fontFamily="@font/ubuntu_bold"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:paddingStart="4dp"
