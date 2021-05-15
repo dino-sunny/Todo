@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <RadioButton
+                <CheckBox
                     android:id="@+id/todo_done_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
