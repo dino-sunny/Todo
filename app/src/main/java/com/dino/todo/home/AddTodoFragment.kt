@@ -108,8 +108,8 @@ class AddTodoFragment : DialogFragment() {
             if (clicked) {
                 if (binding.titleEditText.text.isNotEmpty()) {
                     val newTodo = Todo()
-                    newTodo.title = binding.titleEditText.text.toString()
-                    newTodo.description = binding.descriptionEditText.text.toString()
+                    newTodo.title = binding.titleEditText.text.toString().trim()
+                    newTodo.description = binding.descriptionEditText.text.toString().trim()
 
                     val date = formatedDate()
                     if (date>0) {

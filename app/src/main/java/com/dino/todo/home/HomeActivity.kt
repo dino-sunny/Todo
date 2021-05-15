@@ -84,7 +84,7 @@ class HomeActivity : AppCompatActivity(),OnTodoClickListener {
     }
     //Function called when a task is completed
     override fun onDoneClicked(todo: Todo) {
-        todo.completed = true
+        todo.completed = !todo.completed
         homeViewModel.updateTodo(todo)
         todoAdapter.notifyDataSetChanged()
     }
