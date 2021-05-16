@@ -19,6 +19,8 @@ import com.dino.todo.R
 import com.dino.todo.database.Todo
 import com.dino.todo.database.TodoDatabase
 import com.dino.todo.databinding.AddTodoFragmentBinding
+import com.dino.todo.utility.Constants.ConstantVariables.TODO_DESCRIPTION
+import com.dino.todo.utility.Constants.ConstantVariables.TODO_TITLE
 import com.dino.todo.utility.Constants.ConstantVariables.TODO_UPDATE
 import com.google.gson.Gson
 import java.text.DateFormat
@@ -52,46 +54,8 @@ class AddTodoFragment : DialogFragment() {
             binding.todo = todo
             addTodoViewModel.isUpdate = true
         }
-        setUpAlarmManager()
-        createNotificationChannel()
 
         return binding.root
-    }
-
-    /**
-     * Creates a Notification channel, for OREO and higher.
-     */
-    private fun createNotificationChannel() {
-
-        // Create a notification manager object.
-        mNotificationManager = (activity!!.getSystemService(NOTIFICATION_SERVICE) as NotificationManager?)!!
-
-        // Notification channels are only available in OREO and higher.
-        // So, add a check on SDK version.
-        if (Build.VERSION.SDK_INT >=
-                Build.VERSION_CODES.O) {
-
-            // Create the NotificationChannel with all the parameters.
-            val notificationChannel = NotificationChannel("primary_notification_channel",
-                    "TODO",
-                    NotificationManager.IMPORTANCE_HIGH)
-            notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.RED
-            notificationChannel.enableVibration(true)
-            notificationChannel.description = "You have a task to complete. Open TODO!"
-            mNotificationManager.createNotificationChannel(notificationChannel)
-        }
-    }
-
-    private fun setUpAlarmManager() {
-        alarmManager = activity!!.getSystemService(ALARM_SERVICE) as AlarmManager
-        val notifyIntent = Intent(context, AlarmReceiver::class.java)
-        notifyPendingIntent = PendingIntent.getBroadcast(
-                context,
-                0,
-                notifyIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-        )
     }
 
     override fun onStart() {
@@ -184,6 +148,16 @@ class AddTodoFragment : DialogFragment() {
     }
 
     private fun setNotification(todo: Todo) {
+        alarmManager = activity!!.getSystemService(ALARM_SERVICE) as AlarmManager
+        val notifyIntent = Intent(context, AlarmReceiver::class.java)
+        notifyIntent.putExtra(TODO_TITLE,todo.title)
+        notifyIntent.putExtra(TODO_DESCRIPTION,todo.description)
+        notifyPendingIntent = PendingIntent.getBroadcast(
+                context,
+                0,
+                notifyIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        )
         alarmManager.set(AlarmManager.RTC_WAKEUP, todo.date, notifyPendingIntent)
     }
 }

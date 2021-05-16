@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import androidx.core.app.NotificationCompat
 import com.dino.todo.R
+import com.dino.todo.utility.Constants.ConstantVariables.TODO_DESCRIPTION
+import com.dino.todo.utility.Constants.ConstantVariables.TODO_TITLE
 
 
 //Broadcast receiver for the alarm, which delivers the notification.
@@ -18,10 +20,10 @@ class AlarmReceiver : BroadcastReceiver() {
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         // Deliver the notification.
-        deliverNotification(context)
+        deliverNotification(context,intent)
     }
 
-    private fun deliverNotification(context: Context) {
+    private fun deliverNotification(context: Context,intent: Intent) {
         // Create the content intent for the notification, which launches
         // home activity
         val contentIntent = Intent(context, HomeActivity::class.java)
@@ -33,9 +35,9 @@ class AlarmReceiver : BroadcastReceiver() {
         )
         // Build the notification
         val builder: NotificationCompat.Builder = NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_edit)
-            .setContentTitle("TODO")
-            .setContentText("You have a task to complete. Open TODO!")
+            .setSmallIcon(R.drawable.ic_todo)
+            .setContentTitle(intent.getStringExtra(TODO_TITLE))
+            .setContentText(intent.getStringExtra(TODO_DESCRIPTION))
             .setContentIntent(contentPendingIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
