@@ -73,6 +73,13 @@ class HomeActivity : AppCompatActivity(),OnTodoClickListener {
         showEditTodo(todo)
     }
 
+    //Function called when a task is completed
+    override fun onDoneClicked(todo: Todo) {
+        todo.completed = !todo.completed
+        homeViewModel.updateTodo(todo)
+        todoAdapter.notifyDataSetChanged()
+    }
+
     //Function will load a dialog fragment to edit the item
     private fun showEditTodo(todo: Todo) {
         val bundle = Bundle()
@@ -81,12 +88,6 @@ class HomeActivity : AppCompatActivity(),OnTodoClickListener {
         val fragment = AddTodoFragment()
         fragment.arguments = bundle
         fragment.show(supportFragmentManager, getString(R.string.tag))
-    }
-    //Function called when a task is completed
-    override fun onDoneClicked(todo: Todo) {
-        todo.completed = !todo.completed
-        homeViewModel.updateTodo(todo)
-        todoAdapter.notifyDataSetChanged()
     }
 
     //Custom alert dialog screen to ask confirmation for deleting a task
@@ -103,6 +104,5 @@ class HomeActivity : AppCompatActivity(),OnTodoClickListener {
         }
         cancelButton.setOnClickListener { dialog.dismiss() }
         dialog.show()
-
     }
 }

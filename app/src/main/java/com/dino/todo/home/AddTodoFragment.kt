@@ -106,29 +106,7 @@ class AddTodoFragment : DialogFragment() {
     private fun setObservers() {
         addTodoViewModel.eventSubmit.observe(viewLifecycleOwner, { clicked ->
             if (clicked) {
-                if (binding.titleEditText.text.isNotEmpty()) {
-                    val newTodo = Todo()
-                    newTodo.title = binding.titleEditText.text.toString().trim()
-                    newTodo.description = binding.descriptionEditText.text.toString().trim()
-
-                    val date = formatedDate()
-                    if (date>0) {
-                        newTodo.date = date
-                        newTodo.isNotification = true
-                        setNotification(newTodo)
-                    }
-                    if (addTodoViewModel.isUpdate){
-                        newTodo.todoId = todo.todoId
-                        newTodo.date = date
-                        addTodoViewModel.updateTodo(newTodo)
-                    }else {
-                        addTodoViewModel.addTodo(newTodo)
-                    }
-                    addTodoViewModel.onSubmitComplete()
-                    dismiss()
-                } else {
-                    Toast.makeText(context, getString(R.string.error_message), Toast.LENGTH_SHORT).show()
-                }
+                updateTodo()
             }
         })
 
@@ -147,7 +125,7 @@ class AddTodoFragment : DialogFragment() {
                 val mMonth = c.get(Calendar.MONTH)
                 val mDay = c.get(Calendar.DAY_OF_MONTH)
                 context?.let {
-                    DatePickerDialog(it,
+                    DatePickerDialog(it,R.style.DialogTheme,
                             { view, year, monthOfYear, dayOfMonth ->
                                 binding.editTextDate.setText(dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
                             }, mYear, mMonth, mDay)
@@ -162,7 +140,7 @@ class AddTodoFragment : DialogFragment() {
                 val mHour = c[Calendar.HOUR_OF_DAY]
                 val mMinute = c[Calendar.MINUTE]
                 // Launch Time Picker Dialog
-                val timePickerDialog = TimePickerDialog(context,
+                val timePickerDialog = TimePickerDialog(context,R.style.DialogTheme,
                         { view, hourOfDay, minute -> binding.editTextTime.setText("$hourOfDay:$minute") }, mHour, mMinute, true)
                 timePickerDialog.show()
                 addTodoViewModel.onTimeClickComplete()
@@ -170,11 +148,37 @@ class AddTodoFragment : DialogFragment() {
         })
     }
 
-    private fun formatedDate(): Long {
+    //Function to update or add a new task to database
+    private fun updateTodo() {
+        if (binding.titleEditText.text.isNotEmpty()) {
+            val newTodo = Todo()
+            newTodo.title = binding.titleEditText.text.toString().trim()
+            newTodo.description = binding.descriptionEditText.text.toString().trim()
+
+            if (dateInUnixTimeStamp()>0) {
+                newTodo.date = dateInUnixTimeStamp()
+                newTodo.isNotification = true
+                setNotification(newTodo)
+            }
+            if (addTodoViewModel.isUpdate){
+                newTodo.todoId = todo.todoId
+                newTodo.date = dateInUnixTimeStamp()
+                addTodoViewModel.updateTodo(newTodo)
+            }else {
+                addTodoViewModel.addTodo(newTodo)
+            }
+            addTodoViewModel.onSubmitComplete()
+            dismiss()
+        } else {
+            Toast.makeText(context, getString(R.string.error_message), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun dateInUnixTimeStamp(): Long {
         if (binding.editTextDate.text.toString().isNotEmpty()) {
-            val str_date = binding.editTextDate.text.toString() + " " + binding.editTextTime.text.toString()
+            val newDate = binding.editTextDate.text.toString() + " " + binding.editTextTime.text.toString()
             val formatter: DateFormat = SimpleDateFormat("dd-MM-yyyy hh:mm",Locale.getDefault())
-            val date = formatter.parse(str_date) as Date
+            val date = formatter.parse(newDate) as Date
             return date.time
         }else return 0
     }
