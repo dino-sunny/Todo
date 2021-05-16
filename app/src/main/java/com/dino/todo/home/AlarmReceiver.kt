@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import androidx.core.app.NotificationCompat
 import com.dino.todo.R
+import com.dino.todo.utility.Constants.ConstantVariables.NOTIFICATION_CHANNEL
 import com.dino.todo.utility.Constants.ConstantVariables.TODO_DESCRIPTION
 import com.dino.todo.utility.Constants.ConstantVariables.TODO_TITLE
 
@@ -52,6 +53,6 @@ class AlarmReceiver : BroadcastReceiver() {
         private const val NOTIFICATION_ID = 0
 
         // Notification channel ID.
-        private const val PRIMARY_CHANNEL_ID = "primary_notification_channel"
+        private const val PRIMARY_CHANNEL_ID = NOTIFICATION_CHANNEL
     }
 }
