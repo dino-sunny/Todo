@@ -39,7 +39,7 @@ class HomeActivity : AppCompatActivity(),OnTodoClickListener {
         todoAdapter = TodoAdapter(this)
         completedTodoAdapter = TodoAdapter(this)
         binding.todo.adapter = todoAdapter
-        binding.todos.adapter = completedTodoAdapter
+        binding.completedTodo.adapter = completedTodoAdapter
     }
 
     private fun setObservers(){

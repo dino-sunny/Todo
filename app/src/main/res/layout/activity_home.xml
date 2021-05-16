@@ -10,7 +10,6 @@
             type="com.dino.todo.home.HomeViewModel" />
     </data>
 
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -28,19 +27,22 @@
                 app:popupTheme="@style/Widget.AppCompat.ActionBar">
 
                 <ImageView
+                    android:id="@+id/app_icon"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ic_todo"
-                    android:contentDescription="@string/app_name"/>
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_todo" />
+
                 <TextView
+                    android:id="@+id/app_name_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_name"
                     android:fontFamily="@font/ubuntu_bold"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
                     android:paddingStart="6dp"
-                    android:paddingEnd="4dp"/>
+                    android:paddingEnd="4dp"
+                    android:text="@string/app_name"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -81,28 +83,31 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/todo_heading"
                     tools:layout_editor_absoluteX="-16dp"
-                    tools:listitem="@layout/todo_item">
+                    tools:listitem="@layout/todo_item"
+                    android:nestedScrollingEnabled="false">
 
                 </androidx.recyclerview.widget.RecyclerView>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/todos"
+                    android:id="@+id/completed_todo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:overScrollMode="never"
+                    android:layout_marginBottom="21dp"
+                    android:nestedScrollingEnabled="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView8"
+                    app:layout_constraintTop_toBottomOf="@+id/completed_text"
                     app:layout_constraintVertical_bias="0.0"
                     tools:listitem="@layout/todo_item">
 
                 </androidx.recyclerview.widget.RecyclerView>
 
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/completed_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -123,7 +128,7 @@
         </ScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/add_task_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -147,14 +152,15 @@
             android:visibility="@{(homeViewModel.completedTodo.size()>0 || homeViewModel.todo.size()>0)?View.GONE:View.VISIBLE}"/>
 
         <TextView
+            android:id="@+id/no_task_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="@font/ubuntu"
-            android:textSize="16sp"
-            android:visibility="@{(homeViewModel.completedTodo.size()>0 || homeViewModel.todo.size()>0)?View.GONE:View.VISIBLE}"
-            android:gravity="center_horizontal|bottom"
             android:layout_marginBottom="120dp"
-            android:text="@string/don_t_be_lazy_add_some_todos"/>
+            android:fontFamily="@font/ubuntu"
+            android:gravity="center_horizontal|bottom"
+            android:text="@string/don_t_be_lazy_add_some_todos"
+            android:textSize="16sp"
+            android:visibility="@{(homeViewModel.completedTodo.size()>0 || homeViewModel.todo.size()>0)?View.GONE:View.VISIBLE}" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
