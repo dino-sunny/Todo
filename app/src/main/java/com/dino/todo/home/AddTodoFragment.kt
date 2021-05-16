@@ -83,17 +83,6 @@ class AddTodoFragment : DialogFragment() {
         }
     }
 
-    private fun setUpAlarmManager() {
-        alarmManager = activity!!.getSystemService(ALARM_SERVICE) as AlarmManager
-        val notifyIntent = Intent(context, AlarmReceiver::class.java)
-        notifyPendingIntent = PendingIntent.getBroadcast(
-                context,
-                0,
-                notifyIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-        )
-    }
-
     override fun onStart() {
         super.onStart()
         dialog?.window?.setLayout(
@@ -175,12 +164,12 @@ class AddTodoFragment : DialogFragment() {
     }
 
     private fun dateInUnixTimeStamp(): Long {
-        if (binding.editTextDate.text.toString().isNotEmpty()) {
+        return if (binding.editTextDate.text.toString().isNotEmpty()) {
             val newDate = binding.editTextDate.text.toString() + " " + binding.editTextTime.text.toString()
             val formatter: DateFormat = SimpleDateFormat("dd-MM-yyyy hh:mm",Locale.getDefault())
             val date = formatter.parse(newDate) as Date
-            return date.time
-        }else return 0
+            date.time
+        }else 0
     }
 
     private fun setNotification(todo: Todo) {

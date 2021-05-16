@@ -24,7 +24,7 @@ class TodoAdapter(private val todoClickListener: OnTodoClickListener) : ListAdap
     }
 }
 
-class ViewHolder(val binding: TodoItemBinding): RecyclerView.ViewHolder(binding.root){
+class ViewHolder(private val binding: TodoItemBinding): RecyclerView.ViewHolder(binding.root){
 
     fun bind(item: Todo,todoClickListener: OnTodoClickListener) {
         binding.todo = item
