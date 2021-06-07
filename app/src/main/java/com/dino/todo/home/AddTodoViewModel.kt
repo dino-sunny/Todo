@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AddTodoViewModel (
+class AddTodoViewModel(
     val database: TodoDatabaseDao,
     application: Application
 ) : AndroidViewModel(application) {
@@ -28,53 +28,59 @@ class AddTodoViewModel (
     val eventTime: LiveData<Boolean> get() = _eventTime
 
     //Function to add a task
-    fun addTodo(todo: Todo){
+    fun addTodo(todo: Todo) {
         viewModelScope.launch {
             insert(todo)
         }
     }
+
     private suspend fun insert(todo: Todo) {
         withContext(Dispatchers.IO) {
             database.insert(todo)
         }
     }
 
-    fun updateTodo(todo: Todo){
+    fun updateTodo(todo: Todo) {
         viewModelScope.launch {
             update(todo)
         }
     }
+
     private suspend fun update(todo: Todo) {
         withContext(Dispatchers.IO) {
             database.update(todo)
         }
     }
 
-    fun onSubmitClick(){
+    fun onSubmitClick() {
         _eventSubmitTodo.value = true
     }
-    fun onSubmitComplete(){
+
+    fun onSubmitComplete() {
         _eventSubmitTodo.value = false
     }
 
-    fun onCancelClick(){
+    fun onCancelClick() {
         _eventCancel.value = true
     }
-    fun onCancelComplete(){
+
+    fun onCancelComplete() {
         _eventCancel.value = false
     }
 
-    fun onDateClick(){
+    fun onDateClick() {
         _eventDate.value = true
     }
-    fun onDateClickComplete(){
+
+    fun onDateClickComplete() {
         _eventDate.value = false
     }
 
-    fun onTimeClick(){
+    fun onTimeClick() {
         _eventTime.value = true
     }
-    fun onTimeClickComplete(){
+
+    fun onTimeClickComplete() {
         _eventTime.value = false
     }
 

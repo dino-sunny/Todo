@@ -2,9 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
-        <import type="android.view.View"/>
-        <import type="androidx.core.content.ContextCompat"/>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
         <variable
             name="homeViewModel"
             type="com.dino.todo.home.HomeViewModel" />
@@ -14,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
+
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,13 +67,13 @@
                     android:id="@+id/todo_heading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/ubuntu_bold"
                     android:paddingBottom="10dp"
                     android:text="@string/to_do_list"
                     android:textColor="@color/blue_700"
                     android:textSize="16sp"
-                    android:layout_marginStart="16dp"
                     android:visibility="@{homeViewModel.todo.size()>0?View.VISIBLE:View.GONE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -91,8 +96,8 @@
                     android:id="@+id/completed_todo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:overScrollMode="never"
                     android:layout_marginBottom="21dp"
+                    android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -113,9 +118,9 @@
                     android:fontFamily="@font/ubuntu_bold"
                     android:paddingBottom="10dp"
                     android:text="@string/completed"
-                    android:visibility="@{homeViewModel.completedTodo.size()>0?View.VISIBLE:View.INVISIBLE}"
                     android:textColor="@color/blue_700"
                     android:textSize="16sp"
+                    android:visibility="@{homeViewModel.completedTodo.size()>0?View.VISIBLE:View.INVISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -129,25 +134,25 @@
             android:id="@+id/add_task_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="21dp"
             android:clickable="true"
             android:contentDescription="@string/add_task"
+            android:focusable="true"
             android:onClick="@{() -> homeViewModel.onAddTodoClick()}"
             app:backgroundTint="@color/blue_700"
             app:srcCompat="@drawable/ic_plus"
-            app:tint="@color/white"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="21dp"
-            android:focusable="true" />
+            app:tint="@color/white" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/animationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:lottie_rawRes="@raw/empty_state"
-            app:lottie_autoPlay="true"
             android:layout_gravity="center|center_horizontal"
+            android:visibility="@{(homeViewModel.completedTodo.size()>0 || homeViewModel.todo.size()>0)?View.GONE:View.VISIBLE}"
+            app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            android:visibility="@{(homeViewModel.completedTodo.size()>0 || homeViewModel.todo.size()>0)?View.GONE:View.VISIBLE}"/>
+            app:lottie_rawRes="@raw/empty_state" />
 
         <TextView
             android:id="@+id/no_task_text"

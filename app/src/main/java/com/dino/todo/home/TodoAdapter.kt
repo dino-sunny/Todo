@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dino.todo.database.Todo
 import com.dino.todo.databinding.TodoItemBinding
 
-class TodoAdapter(private val todoClickListener: OnTodoClickListener) : ListAdapter<Todo, ViewHolder>(
-    RecentDiffCallback()
-){
+class TodoAdapter(private val todoClickListener: OnTodoClickListener) :
+    ListAdapter<Todo, ViewHolder>(
+        RecentDiffCallback()
+    ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -20,13 +21,13 @@ class TodoAdapter(private val todoClickListener: OnTodoClickListener) : ListAdap
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind((item),todoClickListener)
+        holder.bind((item), todoClickListener)
     }
 }
 
-class ViewHolder(private val binding: TodoItemBinding): RecyclerView.ViewHolder(binding.root){
+class ViewHolder(private val binding: TodoItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: Todo,todoClickListener: OnTodoClickListener) {
+    fun bind(item: Todo, todoClickListener: OnTodoClickListener) {
         binding.todo = item
         binding.clickListener = todoClickListener
         binding.executePendingBindings()
@@ -34,11 +35,12 @@ class ViewHolder(private val binding: TodoItemBinding): RecyclerView.ViewHolder(
 }
 
 //Listeners for button clicks
-interface OnTodoClickListener{
+interface OnTodoClickListener {
     fun onDeleteClicked(todo: Todo)
     fun onEditClicked(todo: Todo)
     fun onDoneClicked(todo: Todo)
 }
+
 class RecentDiffCallback : DiffUtil.ItemCallback<Todo>() {
     override fun areItemsTheSame(oldItem: Todo, newItem: Todo): Boolean {
         return oldItem.todoId == newItem.todoId

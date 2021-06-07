@@ -14,7 +14,7 @@ import com.dino.todo.databinding.ActivityHomeBinding
 import com.dino.todo.utility.Constants.ConstantVariables.TODO_UPDATE
 import com.google.gson.Gson
 
-class HomeActivity : AppCompatActivity(),OnTodoClickListener {
+class HomeActivity : AppCompatActivity(), OnTodoClickListener {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var todoAdapter: TodoAdapter
     private lateinit var completedTodoAdapter: TodoAdapter
@@ -27,13 +27,15 @@ class HomeActivity : AppCompatActivity(),OnTodoClickListener {
         val viewModelFactory = HomeViewModelFactory(dataSource, application)
         homeViewModel =
             ViewModelProvider(
-                    this, viewModelFactory).get(HomeViewModel::class.java)
+                this, viewModelFactory
+            ).get(HomeViewModel::class.java)
         binding.lifecycleOwner = this
         binding.homeViewModel = homeViewModel
 
         setAdapter()
         setObservers()
     }
+
     //Adapter for listing items
     private fun setAdapter() {
         todoAdapter = TodoAdapter(this)
@@ -42,7 +44,7 @@ class HomeActivity : AppCompatActivity(),OnTodoClickListener {
         binding.completedTodo.adapter = completedTodoAdapter
     }
 
-    private fun setObservers(){
+    private fun setObservers() {
         //Shows pending todos list
         homeViewModel.todo.observe(this, {
             it.let {
@@ -84,7 +86,7 @@ class HomeActivity : AppCompatActivity(),OnTodoClickListener {
     private fun showEditTodo(todo: Todo) {
         val bundle = Bundle()
         val mData = Gson().toJson(todo)
-        bundle.putString(TODO_UPDATE,mData.toString())
+        bundle.putString(TODO_UPDATE, mData.toString())
         val fragment = AddTodoFragment()
         fragment.arguments = bundle
         fragment.show(supportFragmentManager, getString(R.string.tag))

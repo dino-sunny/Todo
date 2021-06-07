@@ -34,22 +34,22 @@ class AddTodoFragment : DialogFragment() {
     private lateinit var alarmManager: AlarmManager
     private lateinit var notifyPendingIntent: PendingIntent
     private lateinit var mNotificationManager: NotificationManager
-
     private lateinit var todo: Todo
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.add_todo_fragment, container, false)
         val application = requireNotNull(this.activity).application
         val dataSource = TodoDatabase.getInstance(application).todoDatabaseDao
         val viewModelFactory = AddTodoViewModelFactory(dataSource, application)
-        addTodoViewModel = ViewModelProvider(this, viewModelFactory).get(AddTodoViewModel::class.java)
+        addTodoViewModel =
+            ViewModelProvider(this, viewModelFactory).get(AddTodoViewModel::class.java)
         binding.addTodoViewModel = addTodoViewModel
 
-        if (arguments!=null) {
+        if (arguments != null) {
             val todoUpdate = arguments?.get(TODO_UPDATE) as String
             todo = Gson().fromJson(todoUpdate, Todo::class.java)
             binding.todo = todo
@@ -65,17 +65,21 @@ class AddTodoFragment : DialogFragment() {
     private fun createNotificationChannel() {
 
         // Create a notification manager object.
-        mNotificationManager = (activity!!.getSystemService(NOTIFICATION_SERVICE) as NotificationManager?)!!
+        mNotificationManager =
+            (requireActivity().getSystemService(NOTIFICATION_SERVICE) as NotificationManager?)!!
 
         // Notification channels are only available in OREO and higher.
         // So, add a check on SDK version.
         if (Build.VERSION.SDK_INT >=
-                Build.VERSION_CODES.O) {
+            Build.VERSION_CODES.O
+        ) {
 
             // Create the NotificationChannel with all the parameters.
-            val notificationChannel = NotificationChannel(NOTIFICATION_CHANNEL,
-                    getString(R.string.app_name),
-                    NotificationManager.IMPORTANCE_HIGH)
+            val notificationChannel = NotificationChannel(
+                NOTIFICATION_CHANNEL,
+                getString(R.string.app_name),
+                NotificationManager.IMPORTANCE_HIGH
+            )
             notificationChannel.enableLights(true)
             notificationChannel.lightColor = Color.RED
             notificationChannel.enableVibration(true)
@@ -86,8 +90,8 @@ class AddTodoFragment : DialogFragment() {
     override fun onStart() {
         super.onStart()
         dialog?.window?.setLayout(
-                ConstraintLayout.LayoutParams.MATCH_PARENT,
-                ConstraintLayout.LayoutParams.WRAP_CONTENT
+            ConstraintLayout.LayoutParams.MATCH_PARENT,
+            ConstraintLayout.LayoutParams.WRAP_CONTENT
         )
         setObservers()
     }
@@ -113,12 +117,16 @@ class AddTodoFragment : DialogFragment() {
                 val mYear = c.get(Calendar.YEAR)
                 val mMonth = c.get(Calendar.MONTH)
                 val mDay = c.get(Calendar.DAY_OF_MONTH)
-                context?.let {
-                    DatePickerDialog(it,R.style.DialogTheme,
-                            { view, year, monthOfYear, dayOfMonth ->
-                                binding.editTextDate.setText(dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
-                            }, mYear, mMonth, mDay)
-                }?.show()
+                val datePickerDialog = context?.let {
+                    DatePickerDialog(it, R.style.DialogTheme,
+                        { _, year, monthOfYear, dayOfMonth ->
+                            val date = dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year
+                            binding.editTextDate.setText(date)
+                        }, mYear, mMonth, mDay
+                    )
+                }
+                datePickerDialog?.datePicker?.minDate = System.currentTimeMillis()
+                datePickerDialog?.show()
                 addTodoViewModel.onDateClickComplete()
             }
         })
@@ -129,8 +137,16 @@ class AddTodoFragment : DialogFragment() {
                 val mHour = c[Calendar.HOUR_OF_DAY]
                 val mMinute = c[Calendar.MINUTE]
                 // Launch Time Picker Dialog
-                val timePickerDialog = TimePickerDialog(context,R.style.DialogTheme,
-                        { view, hourOfDay, minute -> binding.editTextTime.setText("$hourOfDay:$minute") }, mHour, mMinute, true)
+                val timePickerDialog = TimePickerDialog(context,
+                    R.style.DialogTheme,
+                    { _, hourOfDay, minute ->
+                        val time = "$hourOfDay:$minute"
+                        binding.editTextTime.setText(time)
+                    },
+                    mHour,
+                    mMinute,
+                    true
+                )
                 timePickerDialog.show()
                 addTodoViewModel.onTimeClickComplete()
             }
@@ -144,16 +160,16 @@ class AddTodoFragment : DialogFragment() {
             newTodo.title = binding.titleEditText.text.toString().trim()
             newTodo.description = binding.descriptionEditText.text.toString().trim()
 
-            if (dateInUnixTimeStamp()>0) {
+            if (dateInUnixTimeStamp() > 0) {
                 newTodo.date = dateInUnixTimeStamp()
                 newTodo.isNotification = true
                 setNotification(newTodo)
             }
-            if (addTodoViewModel.isUpdate){
+            if (addTodoViewModel.isUpdate) {
                 newTodo.todoId = todo.todoId
                 newTodo.date = dateInUnixTimeStamp()
                 addTodoViewModel.updateTodo(newTodo)
-            }else {
+            } else {
                 addTodoViewModel.addTodo(newTodo)
             }
             addTodoViewModel.onSubmitComplete()
@@ -165,24 +181,25 @@ class AddTodoFragment : DialogFragment() {
 
     private fun dateInUnixTimeStamp(): Long {
         return if (binding.editTextDate.text.toString().isNotEmpty()) {
-            val newDate = binding.editTextDate.text.toString() + " " + binding.editTextTime.text.toString()
-            val formatter: DateFormat = SimpleDateFormat("dd-MM-yyyy hh:mm",Locale.getDefault())
+            val newDate =
+                binding.editTextDate.text.toString() + " " + binding.editTextTime.text.toString()
+            val formatter: DateFormat = SimpleDateFormat("dd-MM-yyyy hh:mm", Locale.getDefault())
             val date = formatter.parse(newDate) as Date
             date.time
-        }else 0
+        } else 0
     }
 
     private fun setNotification(todo: Todo) {
-        alarmManager = activity!!.getSystemService(ALARM_SERVICE) as AlarmManager
+        alarmManager = requireActivity().getSystemService(ALARM_SERVICE) as AlarmManager
         val notifyIntent = Intent(context, AlarmReceiver::class.java)
-        notifyIntent.putExtra(TODO_TITLE,todo.title)
-        notifyIntent.putExtra(TODO_DESCRIPTION,todo.description)
+        notifyIntent.putExtra(TODO_TITLE, todo.title)
+        notifyIntent.putExtra(TODO_DESCRIPTION, todo.description)
         notifyPendingIntent = PendingIntent.getBroadcast(
-                context,
-                0,
-                notifyIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT
+            context,
+            0,
+            notifyIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
         )
-        alarmManager.set(AlarmManager.RTC_WAKEUP, todo.date, notifyPendingIntent)
+        alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, todo.date, notifyPendingIntent)
     }
 }

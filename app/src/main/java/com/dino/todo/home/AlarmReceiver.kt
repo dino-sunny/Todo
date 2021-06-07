@@ -21,10 +21,10 @@ class AlarmReceiver : BroadcastReceiver() {
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         // Deliver the notification.
-        deliverNotification(context,intent)
+        deliverNotification(context, intent)
     }
 
-    private fun deliverNotification(context: Context,intent: Intent) {
+    private fun deliverNotification(context: Context, intent: Intent) {
         // Create the content intent for the notification, which launches
         // home activity
         val contentIntent = Intent(context, HomeActivity::class.java)
@@ -35,14 +35,15 @@ class AlarmReceiver : BroadcastReceiver() {
             PendingIntent.FLAG_UPDATE_CURRENT
         )
         // Build the notification
-        val builder: NotificationCompat.Builder = NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_todo)
-            .setContentTitle(intent.getStringExtra(TODO_TITLE))
-            .setContentText(intent.getStringExtra(TODO_DESCRIPTION))
-            .setContentIntent(contentPendingIntent)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setAutoCancel(true)
-            .setDefaults(NotificationCompat.DEFAULT_ALL)
+        val builder: NotificationCompat.Builder =
+            NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_todo)
+                .setContentTitle(intent.getStringExtra(TODO_TITLE))
+                .setContentText(intent.getStringExtra(TODO_DESCRIPTION))
+                .setContentIntent(contentPendingIntent)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
 
         // Deliver the notification
         mNotificationManager!!.notify(NOTIFICATION_ID, builder.build())

@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class HomeViewModel (
+class HomeViewModel(
     val database: TodoDatabaseDao,
     application: Application
 ) : AndroidViewModel(application) {
@@ -20,11 +20,12 @@ class HomeViewModel (
     val completedTodo = database.getCompletedTodo()
 
     //Function to delete a task
-    fun deleteTodo(todo: Todo){
+    fun deleteTodo(todo: Todo) {
         viewModelScope.launch {
             delete(todo)
         }
     }
+
     //Deleting in a IO thread
     private suspend fun delete(todo: Todo) {
         withContext(Dispatchers.IO) {
@@ -33,11 +34,12 @@ class HomeViewModel (
     }
 
     //Function to update a task
-    fun updateTodo(todo: Todo){
+    fun updateTodo(todo: Todo) {
         viewModelScope.launch {
             update(todo)
         }
     }
+
     //Updating DB in IO thread using coroutine
     private suspend fun update(todo: Todo) {
         withContext(Dispatchers.IO) {
@@ -45,10 +47,11 @@ class HomeViewModel (
         }
     }
 
-    fun onAddTodoClick(){
+    fun onAddTodoClick() {
         _eventAddTodo.value = true
     }
-    fun onAddTodoClickComplete(){
+
+    fun onAddTodoClickComplete() {
         _eventAddTodo.value = false
     }
 
